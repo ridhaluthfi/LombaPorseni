@@ -1,0 +1,1899 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageMetaTitle">PORSENI SD 2026 - Kecamatan Pinoh Utara</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Inter & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#16a34a',
+                            600: '#15803d',
+                            700: '#166534',
+                            800: '#14532d',
+                            900: '#052e16'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .tab-section { display: none; }
+        .tab-section.active { display: block; }
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.95; transform: scale(1.01); }
+        }
+        .hero-glow {
+            animation: pulse-slow 4s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col selection:bg-amber-400 selection:text-slate-950">
+
+    <!-- Header & Navigation -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo & Title -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchMenu('beranda')">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-500 via-emerald-600 to-sky-600 p-0.5 shadow-md flex items-center justify-center">
+                        <div class="w-full h-full bg-white rounded-[14px] flex items-center justify-center">
+                            <i class="fa-solid fa-medal text-emerald-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span id="navBrandTitle" class="text-lg sm:text-xl font-black tracking-tight text-slate-900 uppercase">PORSENI SD 2026</span>
+                            <span class="bg-emerald-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase">Kec. Pinoh Utara</span>
+                        </div>
+                        <p class="text-xs text-slate-500 font-medium hidden sm:block">Kabupaten Melawi, Kalimantan Barat</p>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Menu -->
+                <nav class="hidden lg:flex items-center space-x-1">
+                    <button onclick="switchMenu('beranda')" id="menu-btn-beranda" class="nav-btn px-3.5 py-2 rounded-xl text-sm font-bold transition-all text-emerald-700 bg-emerald-50">Beranda</button>
+                    <button onclick="switchMenu('cabang')" id="menu-btn-cabang" class="nav-btn px-3.5 py-2 rounded-xl text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">Cabang & Peserta</button>
+                    <button onclick="switchMenu('pendaftaran')" id="menu-btn-pendaftaran" class="nav-btn px-3.5 py-2 rounded-xl text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">Pendaftaran</button>
+                    <button onclick="switchMenu('juknis')" id="menu-btn-juknis" class="nav-btn px-3.5 py-2 rounded-xl text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">Juknis</button>
+                    <button onclick="switchMenu('jadwal')" id="menu-btn-jadwal" class="nav-btn px-3.5 py-2 rounded-xl text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">Jadwal</button>
+                    <button onclick="switchMenu('juara')" id="menu-btn-juara" class="nav-btn px-3.5 py-2 rounded-xl text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">Juara Cabang</button>
+                    <button onclick="switchMenu('klasemen')" id="menu-btn-klasemen" class="nav-btn px-3.5 py-2 rounded-xl text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100">Klasemen</button>
+                </nav>
+
+                <!-- Right Action / Admin status -->
+                <div class="flex items-center space-x-3">
+                    <div id="adminBadge" class="hidden items-center space-x-2 bg-emerald-50 border border-emerald-300 px-3 py-1.5 rounded-xl">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                        <span class="text-xs font-bold text-emerald-800">Admin Aktif</span>
+                        <button onclick="logoutAdmin()" class="text-xs text-rose-600 hover:text-rose-700 ml-2 font-bold"><i class="fa-solid fa-power-off"></i></button>
+                    </div>
+                    <button onclick="switchMenu('admin')" id="menu-btn-admin" class="lg:hidden px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-all">
+                        <i class="fa-solid fa-lock text-amber-500"></i> Admin
+                    </button>
+                    <!-- Mobile Menu Toggle -->
+                    <button onclick="toggleMobileMenu()" class="lg:hidden p-2.5 bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200">
+                        <i class="fa-solid fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-1">
+            <button onclick="switchMenu('beranda'); toggleMobileMenu();" class="mobile-nav-link block w-full text-left px-4 py-2.5 rounded-xl text-sm font-bold text-emerald-700 bg-emerald-50">Beranda</button>
+            <button onclick="switchMenu('cabang'); toggleMobileMenu();" class="mobile-nav-link block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Cabang & Peserta</button>
+            <button onclick="switchMenu('pendaftaran'); toggleMobileMenu();" class="mobile-nav-link block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Pendaftaran</button>
+            <button onclick="switchMenu('juknis'); toggleMobileMenu();" class="mobile-nav-link block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Juknis</button>
+            <button onclick="switchMenu('jadwal'); toggleMobileMenu();" class="mobile-nav-link block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Jadwal</button>
+            <button onclick="switchMenu('juara'); toggleMobileMenu();" class="mobile-nav-link block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Juara Cabang</button>
+            <button onclick="switchMenu('klasemen'); toggleMobileMenu();" class="mobile-nav-link block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-700 hover:bg-slate-100">Klasemen</button>
+            <button onclick="switchMenu('admin'); toggleMobileMenu();" class="mobile-nav-link block w-full text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-amber-600 hover:bg-slate-100"><i class="fa-solid fa-lock mr-2"></i> Panel Admin</button>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow">
+
+        <!-- ========================================== -->
+        <!-- 1. MENU BERANDA                            -->
+        <!-- ========================================== -->
+        <section id="section-beranda" class="tab-section active py-12 lg:py-20 bg-gradient-to-b from-emerald-50 via-white to-slate-50 relative overflow-hidden">
+            <!-- Background glow accents -->
+            <div class="absolute top-0 left-1/4 w-96 h-96 bg-emerald-300/30 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute bottom-10 right-10 w-96 h-96 bg-amber-300/30 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <!-- Hero Banner Box with Sports Imagery -->
+                <div id="heroBannerBox" class="hero-glow bg-gradient-to-r from-emerald-600 via-emerald-700 to-teal-800 border border-emerald-500/30 rounded-3xl p-8 sm:p-12 lg:p-16 shadow-2xl mb-16 text-white flex flex-col lg:flex-row items-center justify-between gap-10 relative overflow-hidden transition-all">
+                    <div id="heroBgImageLayer" class="absolute right-0 top-0 bottom-0 w-1/2 opacity-25 bg-cover bg-center hidden lg:block pointer-events-none" style="background-image: url('https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=1200&q=80')"></div>
+                    
+                    <div class="max-w-2xl relative z-10">
+                        <div id="heroBadgeWrapper" class="inline-flex items-center space-x-2 bg-amber-400 text-slate-950 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest mb-6 shadow-md">
+                            <i class="fa-solid fa-bolt text-slate-950"></i>
+                            <span id="heroBadgeText">Semangat Juang Sportivitas Tanpa Batas</span>
+                        </div>
+                        <h1 id="heroMainTitle" class="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-none mb-6 drop-shadow-md">
+                            PORSENI SD KECAMATAN PINOH UTARA <span id="heroYear" class="text-amber-300">2026</span>
+                        </h1>
+                        <p id="heroDescText" class="text-emerald-50 text-base sm:text-lg mb-8 leading-relaxed font-medium">
+                            Ajang Pekan Olahraga dan Seni (PORSENI) tingkat Sekolah Dasar se-Kecamatan Pinoh Utara. Mari wujudkan generasi pelajar yang berprestasi, sportif, kreatif, dan membanggakan Kabupaten Melawi!
+                        </p>
+                        <div class="flex flex-wrap justify-center lg:justify-start gap-4">
+                            <button onclick="switchMenu('pendaftaran')" class="bg-amber-400 hover:bg-amber-500 text-slate-950 font-black px-8 py-4 rounded-2xl shadow-lg transition-all flex items-center space-x-3 text-base">
+                                <i class="fa-solid fa-user-plus"></i>
+                                <span>Pendaftaran Kontingen</span>
+                            </button>
+                            <button onclick="switchMenu('klasemen')" class="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-extrabold px-7 py-4 rounded-2xl transition-all flex items-center space-x-3 text-base backdrop-blur-sm">
+                                <i class="fa-solid fa-trophy text-amber-300"></i>
+                                <span>Lihat Klasemen Medali</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Countdown & Quick Card -->
+                    <div id="countdownWidgetBox" class="w-full lg:w-auto bg-white/95 border border-white/20 p-6 rounded-3xl shadow-2xl backdrop-blur-md min-w-[300px] text-slate-900">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xs font-black uppercase tracking-widest text-emerald-700">Hitung Mundur Pelaksanaan</h3>
+                            <span id="countdownStatusBadge" class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Aktif</span>
+                        </div>
+                        <div class="grid grid-cols-4 gap-2 text-center mb-6">
+                            <div class="bg-slate-100 border border-slate-200 p-3 rounded-2xl">
+                                <span id="cd-days" class="text-2xl sm:text-3xl font-black text-slate-900 block">00</span>
+                                <span class="text-[10px] text-slate-500 uppercase font-bold">Hari</span>
+                            </div>
+                            <div class="bg-slate-100 border border-slate-200 p-3 rounded-2xl">
+                                <span id="cd-hours" class="text-2xl sm:text-3xl font-black text-slate-900 block">00</span>
+                                <span class="text-[10px] text-slate-500 uppercase font-bold">Jam</span>
+                            </div>
+                            <div class="bg-slate-100 border border-slate-200 p-3 rounded-2xl">
+                                <span id="cd-mins" class="text-2xl sm:text-3xl font-black text-slate-900 block">00</span>
+                                <span class="text-[10px] text-slate-500 uppercase font-bold">Menit</span>
+                            </div>
+                            <div class="bg-slate-100 border border-slate-200 p-3 rounded-2xl">
+                                <span id="cd-secs" class="text-2xl sm:text-3xl font-black text-emerald-600 block">00</span>
+                                <span class="text-[10px] text-slate-500 uppercase font-bold">Detik</span>
+                            </div>
+                        </div>
+                        <div class="border-t border-slate-200 pt-4 text-center">
+                            <p class="text-xs text-slate-500">Lokasi Utama:</p>
+                            <p id="heroLocationText" class="text-sm font-bold text-slate-800 mt-0.5">Kecamatan Pinoh Utara, Kab. Melawi</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-16">
+                    <div class="bg-white border border-slate-200 p-6 rounded-3xl text-center shadow-md hover:border-emerald-500 transition-all">
+                        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                            <i class="fa-solid fa-school"></i>
+                        </div>
+                        <h4 class="text-3xl font-black text-slate-900 mb-1">25 SD</h4>
+                        <p class="text-xs text-slate-500 font-bold uppercase tracking-wider">Sekolah Peserta Resmi</p>
+                    </div>
+                    <div class="bg-white border border-slate-200 p-6 rounded-3xl text-center shadow-md hover:border-emerald-500 transition-all">
+                        <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                            <i class="fa-solid fa-medal"></i>
+                        </div>
+                        <h4 class="text-3xl font-black text-slate-900 mb-1">14 Cabang</h4>
+                        <p class="text-xs text-slate-500 font-bold uppercase tracking-wider">OSN, O2SN & FLS2N</p>
+                    </div>
+                    <div class="bg-white border border-slate-200 p-6 rounded-3xl text-center shadow-md hover:border-emerald-500 transition-all">
+                        <div class="w-12 h-12 bg-sky-100 text-sky-600 rounded-2xl flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                            <i class="fa-solid fa-user-graduate"></i>
+                        </div>
+                        <h4 class="text-3xl font-black text-slate-900 mb-1">450+</h4>
+                        <p class="text-xs text-slate-500 font-bold uppercase tracking-wider">Siswa Peserta</p>
+                    </div>
+                    <div class="bg-white border border-slate-200 p-6 rounded-3xl text-center shadow-md hover:border-emerald-500 transition-all">
+                        <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                            <i class="fa-solid fa-calendar-days"></i>
+                        </div>
+                        <h4 class="text-3xl font-black text-slate-900 mb-1">7 Hari</h4>
+                        <p class="text-xs text-slate-500 font-bold uppercase tracking-wider">Penuh Kompetisi</p>
+                    </div>
+                </div>
+
+                <!-- Sambutan & Info Singkat -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 bg-white border border-slate-200 rounded-3xl p-8 shadow-md">
+                        <span class="text-xs font-black uppercase tracking-wider text-amber-600">Sambutan Panitia Pelaksana</span>
+                        <h3 id="sambutanTitle" class="text-2xl font-black text-slate-900 mt-2 mb-4">Selamat Datang di PORSENI SD Pinoh Utara 2026</h3>
+                        <p id="sambutanDesc1" class="text-slate-600 text-sm leading-relaxed mb-4">
+                            Kegiatan PORSENI tingkat Sekolah Dasar se-Kecamatan Pinoh Utara ini diselenggarakan sebagai wadah pembinaan bakat, minat, serta karakter sportif anak-anak didik kita dari SDN 1 hingga SDN 25 Pinoh Utara.
+                        </p>
+                        <p id="sambutanDesc2" class="text-slate-600 text-sm leading-relaxed mb-6">
+                            Melalui ajang OSN, O2SN, dan FLS2N, kami berharap lahir generasi muda yang tidak hanya cerdas secara akademik, namun juga tangguh dalam bidang olahraga serta berjiwa seni tinggi. Selamat bertanding kepada seluruh kontingen!
+                        </p>
+                        <div class="flex items-center space-x-4 border-t border-slate-100 pt-6">
+                            <div class="w-12 h-12 bg-emerald-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">
+                                <i class="fa-solid fa-user-tie"></i>
+                            </div>
+                            <div>
+                                <h5 id="sambutanKetua" class="text-slate-900 font-bold text-sm">Ketua Panitia PORSENI 2026</h5>
+                                <p id="sambutanKorwil" class="text-xs text-slate-500">Korwil Dinas Pendidikan Kecamatan Pinoh Utara</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white border border-slate-200 rounded-3xl p-8 shadow-md flex flex-col justify-between">
+                        <div>
+                            <span class="text-xs font-black uppercase tracking-wider text-emerald-600">Kategori Lomba Resmi</span>
+                            <h3 class="text-xl font-black text-slate-900 mt-2 mb-4">Bidang Pertandingan</h3>
+                            <div class="space-y-3">
+                                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex items-center space-x-3">
+                                    <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-bold">
+                                        <i class="fa-solid fa-atom"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-slate-900 font-bold text-sm">OSN (Sains & Matematika)</h5>
+                                        <p class="text-xs text-slate-500">Olimpiade Sains Nasional SD</p>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex items-center space-x-3">
+                                    <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold">
+                                        <i class="fa-solid fa-futbol"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-slate-900 font-bold text-sm">O2SN (Olahraga)</h5>
+                                        <p class="text-xs text-slate-500">Olimpiade Olahraga Siswa Nasional</p>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex items-center space-x-3">
+                                    <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold">
+                                        <i class="fa-solid fa-palette"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-slate-900 font-bold text-sm">FLS2N (Seni & Budaya)</h5>
+                                        <p class="text-xs text-slate-500">Festival Lomba Seni Siswa Nasional</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="switchMenu('cabang')" class="w-full mt-6 bg-slate-100 hover:bg-slate-200 text-emerald-700 font-bold py-3 rounded-xl text-xs transition-all border border-slate-200 flex items-center justify-center space-x-2">
+                            <span>Jelajahi Semua Cabang</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 2. MENU CABANG & PESERTA                   -->
+        <!-- ========================================== -->
+        <section id="section-cabang" class="tab-section py-12 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                    <div>
+                        <span class="bg-emerald-100 text-emerald-800 text-xs font-black uppercase tracking-wider px-3.5 py-1.5 rounded-full border border-emerald-300">Daftar Lomba & Peserta</span>
+                        <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3">Cabang OSN, O2SN & FLS2N SD</h2>
+                        <p class="text-slate-600 mt-1">Pilih cabang lomba untuk melihat peserta terdaftar dan tentukan pemenang medali.</p>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-3">
+                        <div id="adminAddBranchBtnContainer" class="hidden">
+                            <button onclick="openAddBranchModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-sm transition-all flex items-center space-x-2">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>+ Tambah Cabang</span>
+                            </button>
+                        </div>
+                        <div class="flex bg-white border border-slate-200 p-1.5 rounded-2xl gap-1 shadow-sm">
+                            <button onclick="filterCabangBidang('all')" id="cb-filter-all" class="cb-filter px-4 py-2 rounded-xl text-xs font-extrabold bg-emerald-600 text-white transition-all">Semua</button>
+                            <button onclick="filterCabangBidang('OSN')" id="cb-filter-OSN" class="cb-filter px-4 py-2 rounded-xl text-xs font-extrabold text-slate-600 hover:text-slate-900 transition-all">OSN</button>
+                            <button onclick="filterCabangBidang('O2SN')" id="cb-filter-O2SN" class="cb-filter px-4 py-2 rounded-xl text-xs font-extrabold text-slate-600 hover:text-slate-900 transition-all">O2SN</button>
+                            <button onclick="filterCabangBidang('FLS2N')" id="cb-filter-FLS2N" class="cb-filter px-4 py-2 rounded-xl text-xs font-extrabold text-slate-600 hover:text-slate-900 transition-all">FLS2N</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cabang Grid Cards -->
+                <div id="cabangCardsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                    <!-- Diisi via JS -->
+                </div>
+
+                <!-- Detail Peserta & Admin Panel Pemenang untuk Cabang Terpilih -->
+                <div id="cabangDetailWrapper" class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xl hidden">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between pb-6 border-b border-slate-200 gap-4 mb-6">
+                        <div class="flex items-center space-x-4">
+                            <div id="detailCabangIconBox" class="w-14 h-14 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center text-2xl font-bold">
+                                <i id="detailCabangIcon" class="fa-solid fa-trophy"></i>
+                            </div>
+                            <div>
+                                <div class="flex items-center space-x-3">
+                                    <span id="detailCabangBidang" class="text-xs font-black uppercase tracking-wider text-amber-700 bg-amber-100 px-2.5 py-1 rounded-lg border border-amber-300">OSN</span>
+                                    <span id="detailCabangCount" class="text-xs text-slate-500 font-bold">0 Peserta terdaftar</span>
+                                </div>
+                                <h3 id="detailCabangTitle" class="text-2xl font-black text-slate-900 mt-1">Nama Cabang Lomba</h3>
+                                <p id="detailCabangKoordinator" class="text-xs text-emerald-800 mt-1 font-medium"><i class="fa-solid fa-user-shield mr-1"></i> Koordinator: - (WA: -)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div id="adminBranchEditBtnContainer" class="hidden flex items-center space-x-2">
+                                <button onclick="openEditActiveBranchModal()" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-3.5 py-2 rounded-xl text-xs flex items-center space-x-1.5"><i class="fa-solid fa-pen-to-square"></i><span>Edit Cabang</span></button>
+                                <button onclick="deleteActiveBranch()" class="bg-rose-600 hover:bg-rose-700 text-white font-bold px-3.5 py-2 rounded-xl text-xs flex items-center space-x-1.5"><i class="fa-solid fa-trash"></i><span>Hapus</span></button>
+                            </div>
+                            <button onclick="closeCabangDetail()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-xmark mr-1"></i> Tutup</button>
+                        </div>
+                    </div>
+
+                    <!-- ADMIN PANEL: Tentukan Medali Pemenang Langsung di Sini -->
+                    <div id="adminWinnerAssignmentPanel" class="hidden mb-8 bg-slate-50 border border-amber-300 rounded-2xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-2">
+                                <span class="bg-amber-500 text-slate-950 font-black text-xs px-2.5 py-1 rounded-lg uppercase">Panel Admin</span>
+                                <h4 class="text-base font-bold text-slate-900">Tentukan Juara Cabang Lomba Ini</h4>
+                            </div>
+                            <span class="text-xs text-slate-500">Otomatis masuk Klasemen Medali & Juara Cabang</span>
+                        </div>
+                        <form id="formAssignWinner" onsubmit="handleSaveBranchWinner(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <!-- Juara 1 (Emas) -->
+                            <div class="bg-white p-4 rounded-xl border border-amber-300 shadow-sm">
+                                <label class="block text-xs font-extrabold text-amber-700 mb-2"><i class="fa-solid fa-medal text-amber-500 mr-1"></i> Juara 1 (Emas 🥇)</label>
+                                <select id="winGoldSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-amber-500">
+                                    <option value="">-- Pilih Peserta / Kontingen --</option>
+                                </select>
+                            </div>
+                            <!-- Juara 2 (Perak) -->
+                            <div class="bg-white p-4 rounded-xl border border-slate-300 shadow-sm">
+                                <label class="block text-xs font-extrabold text-slate-700 mb-2"><i class="fa-solid fa-medal text-slate-400 mr-1"></i> Juara 2 (Perak 🥈)</label>
+                                <select id="winSilverSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-slate-500">
+                                    <option value="">-- Pilih Peserta / Kontingen --</option>
+                                </select>
+                            </div>
+                            <!-- Juara 3 (Perunggu) -->
+                            <div class="bg-white p-4 rounded-xl border border-amber-800/30 shadow-sm">
+                                <label class="block text-xs font-extrabold text-amber-900 mb-2"><i class="fa-solid fa-medal text-amber-700 mr-1"></i> Juara 3 (Perunggu 🥉)</label>
+                                <select id="winBronzeSelect" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-amber-800">
+                                    <option value="">-- Pilih Peserta / Kontingen --</option>
+                                </select>
+                            </div>
+                            <div class="md:col-span-3 flex justify-end">
+                                <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-black px-6 py-2.5 rounded-xl text-xs shadow-md transition-all flex items-center space-x-2">
+                                    <i class="fa-solid fa-floppy-disk"></i>
+                                    <span>Simpan & Perbarui Klasemen</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Daftar Peserta Terdaftar di Cabang Ini -->
+                    <h4 class="text-sm font-black text-slate-700 uppercase tracking-wider mb-4"><i class="fa-solid fa-users mr-2 text-emerald-600"></i>Daftar Peserta Sekolah</h4>
+                    <div id="detailParticipantsList" class="overflow-x-auto">
+                        <!-- Diisi via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 3. MENU PENDAFTARAN                        -->
+        <!-- ========================================== -->
+        <section id="section-pendaftaran" class="tab-section py-12 bg-slate-50">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-10">
+                    <span class="bg-emerald-100 text-emerald-800 text-xs font-black uppercase tracking-wider px-3.5 py-1.5 rounded-full border border-emerald-300">Formulir Resmi</span>
+                    <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3">Pendaftaran Kontingen Sekolah</h2>
+                    <p class="text-slate-600 mt-1">Daftarkan siswa/regu dari SD Negeri se-Kecamatan Pinoh Utara (SDN 1 s.d. SDN 25).</p>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-10 shadow-xl">
+                    <form id="formPendaftaran" onsubmit="handleRegistrationSubmit(event)" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Sekolah Asal -->
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Pilih Asal Sekolah (SD)</label>
+                                <select id="regSekolah" required class="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3.5 text-sm text-slate-900 focus:outline-none focus:border-emerald-500">
+                                    <option value="">-- Pilih SDN Pinoh Utara --</option>
+                                    <option value="SD NEGERI 1 PINOH UTARA">SD NEGERI 1 PINOH UTARA</option>
+                                    <option value="SD NEGERI 2 NANGA MAN">SD NEGERI 2 NANGA MAN</option>
+                                    <option value="SD NEGERI 3 MELAMUT">SD NEGERI 3 MELAMUT</option>
+                                    <option value="SD NEGERI 4 NYATANG">SD NEGERI 4 NYATANG</option>
+                                    <option value="SD NEGERI 5 SUNGAI PINANG">SD NEGERI 5 SUNGAI PINANG</option>
+                                    <option value="SD NEGERI 6 PINOH UTARA">SD NEGERI 6 PINOH UTARA</option>
+                                    <option value="SD NEGERI 07 MERPAK">SD NEGERI 07 MERPAK</option>
+                                    <option value="SD NEGERI 8 KENINJAL">SD NEGERI 8 KENINJAL</option>
+                                    <option value="SD NEGERI 9 TANJUNG ARAK">SD NEGERI 9 TANJUNG ARAK</option>
+                                    <option value="SD NEGERI 10 MANDING">SD NEGERI 10 MANDING</option>
+                                    <option value="SD NEGERI 11 TENGKAJAU">SD NEGERI 11 TENGKAJAU</option>
+                                    <option value="SD NEGERI 12 ENGKURAI">SD NEGERI 12 ENGKURAI</option>
+                                    <option value="SD NEGERI 13 SELAOH">SD NEGERI 13 SELAOH</option>
+                                    <option value="SD NEGERI 14 NATAI PANJANG">SD NEGERI 14 NATAI PANJANG</option>
+                                    <option value="SD NEGERI 15 SENIBUNG DARAT">SD NEGERI 15 SENIBUNG DARAT</option>
+                                    <option value="SD NEGERI 16 SUKA DAMAI">SD NEGERI 16 SUKA DAMAI</option>
+                                    <option value="SD NEGERI 17 LEBAK TAPANG">SD NEGERI 17 LEBAK TAPANG</option>
+                                    <option value="SD NEGERI 18 SUNGAI RAYA">SD NEGERI 18 SUNGAI RAYA</option>
+                                    <option value="SD NEGERI 19 KECUKUH">SD NEGERI 19 KECUKUH</option>
+                                    <option value="SD NEGERI 20 AKAMAYAU">SD NEGERI 20 AKAMAYAU</option>
+                                    <option value="SD NEGERI 21 MERAH ARAI">SD NEGERI 21 MERAH ARAI</option>
+                                    <option value="SD NEGERI 22 JABA">SD NEGERI 22 JABA</option>
+                                    <option value="SD NEGERI 23 SENIBUNG LAUT">SD NEGERI 23 SENIBUNG LAUT</option>
+                                    <option value="SD NEGERI 24 LUMUT">SD NEGERI 24 LUMUT</option>
+                                    <option value="SD NEGERI 25 KAYAN SEMAPAU">SD NEGERI 25 KAYAN SEMAPAU</option>
+                                </select>
+                            </div>
+
+                            <!-- Cabang Lomba -->
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Cabang Lomba (OSN / O2SN / FLS2N)</label>
+                                <select id="regCabang" required class="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3.5 text-sm text-slate-900 focus:outline-none focus:border-emerald-500">
+                                    <option value="">-- Pilih Cabang Lomba --</option>
+                                </select>
+                            </div>
+
+                            <!-- Nama Peserta / Regu -->
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Nama Siswa / Nama Regu</label>
+                                <input type="text" id="regNama" required placeholder="Contoh: Ahmad Rizki / Regu Putra Melati" class="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3.5 text-sm text-slate-900 focus:outline-none focus:border-emerald-500">
+                            </div>
+
+                            <!-- Guru Pendamping / Official -->
+                            <div>
+                                <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Guru Pendamping / Official</label>
+                                <input type="text" id="regOfficial" required placeholder="Contoh: Bpk. Sugiarto, S.Pd." class="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3.5 text-sm text-slate-900 focus:outline-none focus:border-emerald-500">
+                            </div>
+                        </div>
+
+                        <div class="pt-4 border-t border-slate-200 flex items-center justify-between">
+                            <p class="text-xs text-slate-500"><i class="fa-solid fa-circle-info mr-1 text-amber-600"></i> Pastikan data nama sudah benar sebelum dikirim.</p>
+                            <button type="submit" class="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-black px-8 py-3.5 rounded-2xl text-sm shadow-lg shadow-emerald-600/20 transition-all flex items-center space-x-2">
+                                <i class="fa-solid fa-paper-plane"></i>
+                               <span>Kirim Pendaftaran</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 4. MENU JUKNIS                             -->
+        <!-- ========================================== -->
+        <section id="section-juknis" class="tab-section py-12 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                    <div>
+                        <span class="bg-emerald-100 text-emerald-800 text-xs font-black uppercase tracking-wider px-3.5 py-1.5 rounded-full border border-emerald-300">Panduan Teknis</span>
+                        <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3">Petunjuk Teknis (Juknis) PORSENI SD</h2>
+                        <p class="text-slate-600 mt-1">Aturan umum, ketentuan khusus, serta unduhan dokumen/tautan resmi Juknis.</p>
+                    </div>
+
+                    <div class="flex items-center space-x-3">
+                        <div id="adminAddJuknisBtnContainer" class="hidden">
+                            <button onclick="openAddJuknisModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-sm transition-all flex items-center space-x-2">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>+ Tambah Juknis</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="juknisContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Diisi via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 5. MENU JADWAL                             -->
+        <!-- ========================================== -->
+        <section id="section-jadwal" class="tab-section py-12 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                    <div>
+                        <span class="bg-emerald-100 text-emerald-800 text-xs font-black uppercase tracking-wider px-3.5 py-1.5 rounded-full border border-emerald-300">Agenda Kegiatan</span>
+                        <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3">Jadwal Pelaksanaan PORSENI SD</h2>
+                        <p class="text-slate-600 mt-1">Rangkaian acara lengkap dari Senin hingga Minggu di Kecamatan Pinoh Utara.</p>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <div id="adminAddScheduleBtnContainer" class="hidden">
+                            <button onclick="openAddScheduleModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold px-4 py-2.5 rounded-xl text-xs sm:text-sm shadow-sm transition-all flex items-center space-x-2">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>+ Tambah Jadwal</span>
+                            </button>
+                        </div>
+                        <div class="flex overflow-x-auto pb-2 sm:pb-0 gap-2 max-w-full">
+                            <button onclick="filterSchedule('all')" id="sched-btn-all" class="sched-btn shrink-0 px-3.5 py-2.5 rounded-xl font-extrabold text-xs bg-emerald-600 text-white shadow-sm transition-all">Semua</button>
+                            <button onclick="filterSchedule('Hari 1')" id="sched-btn-Hari 1" class="sched-btn shrink-0 px-3.5 py-2.5 rounded-xl font-extrabold text-xs bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 transition-all">Senin</button>
+                            <button onclick="filterSchedule('Hari 2')" id="sched-btn-Hari 2" class="sched-btn shrink-0 px-3.5 py-2.5 rounded-xl font-extrabold text-xs bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 transition-all">Selasa</button>
+                            <button onclick="filterSchedule('Hari 3')" id="sched-btn-Hari 3" class="sched-btn shrink-0 px-3.5 py-2.5 rounded-xl font-extrabold text-xs bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 transition-all">Rabu</button>
+                            <button onclick="filterSchedule('Hari 4')" id="sched-btn-Hari 4" class="sched-btn shrink-0 px-3.5 py-2.5 rounded-xl font-extrabold text-xs bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 transition-all">Kamis</button>
+                            <button onclick="filterSchedule('Hari 5')" id="sched-btn-Hari 5" class="sched-btn shrink-0 px-3.5 py-2.5 rounded-xl font-extrabold text-xs bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 transition-all">Jumat</button>
+                            <button onclick="filterSchedule('Hari 6')" id="sched-btn-Hari 6" class="sched-btn shrink-0 px-3.5 py-2.5 rounded-xl font-extrabold text-xs bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 transition-all">Sabtu</button>
+                            <button onclick="filterSchedule('Hari 7')" id="sched-btn-Hari 7" class="sched-btn shrink-0 px-3.5 py-2.5 rounded-xl font-extrabold text-xs bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 transition-all">Minggu</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="scheduleContainer" class="space-y-6">
+                    <!-- Diisi via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 6. MENU JUARA CABANG                       -->
+        <!-- ========================================== -->
+        <section id="section-juara" class="tab-section py-12 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-10">
+                    <span class="bg-amber-100 text-amber-800 text-xs font-black uppercase tracking-wider px-3.5 py-1.5 rounded-full border border-amber-300">Daftar Pemenang</span>
+                    <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3">Juara Tiap Cabang Lomba</h2>
+                    <p class="text-slate-600 mt-1">Peraih medali Emas, Perak, dan Perunggu di seluruh cabang OSN, O2SN & FLS2N.</p>
+                </div>
+
+                <div id="juaraCabangContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Diisi via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 7. MENU KLASEMEN                           -->
+        <!-- ========================================== -->
+        <section id="section-klasemen" class="tab-section py-12 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                    <div>
+                        <span class="bg-amber-100 text-amber-800 text-xs font-black uppercase tracking-wider px-3.5 py-1.5 rounded-full border border-amber-300">Perolehan Medali</span>
+                        <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3">Klasemen Peringkat Sekolah</h2>
+                        <p class="text-slate-600 mt-1">Peringkat resmi kontingen sekolah SD se-Kecamatan Pinoh Utara.</p>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xl">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-600 text-xs uppercase tracking-wider border-b border-slate-200">
+                                    <th class="py-4 px-6 font-black text-center w-16">Rank</th>
+                                    <th class="py-4 px-6 font-black">Asal Sekolah (SD)</th>
+                                    <th class="py-4 px-6 font-black text-center text-amber-600"><i class="fa-solid fa-medal"></i> Emas</th>
+                                    <th class="py-4 px-6 font-black text-center text-slate-600"><i class="fa-solid fa-medal"></i> Perak</th>
+                                    <th class="py-4 px-6 font-black text-center text-amber-800"><i class="fa-solid fa-medal"></i> Perunggu</th>
+                                    <th class="py-4 px-6 font-black text-center text-emerald-600">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="klasemenTableBody" class="divide-y divide-slate-200 text-sm">
+                                <!-- Diisi via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 8. MENU PANEL ADMIN                        -->
+        <!-- ========================================== -->
+        <section id="section-admin" class="tab-section py-12 bg-slate-50">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div id="adminLoginBox" class="bg-white border border-slate-200 rounded-3xl p-8 shadow-xl max-w-md mx-auto">
+                    <div class="text-center mb-6">
+                        <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-3 text-2xl font-bold">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+                        <h2 class="text-2xl font-black text-slate-900">Login Panel Admin</h2>
+                        <p class="text-slate-500 text-xs mt-1">Khusus Panitia Pengelola PORSENI Pinoh Utara (Kredensial Rahasia)</p>
+                    </div>
+
+                    <form onsubmit="handleAdminLogin(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Username Admin</label>
+                            <input type="text" id="adminUser" required placeholder="Masukkan username panitia" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">Password</label>
+                            <input type="password" id="adminPass" required placeholder="Masukkan kata sandi rahasia" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-amber-500">
+                        </div>
+                        <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-black py-3.5 rounded-xl text-sm transition-all shadow-md">
+                            Masuk ke Panel Pengelola
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Admin Dashboard (Muncul jika sudah login) -->
+                <div id="adminDashboardBox" class="hidden space-y-8">
+                    <div class="bg-gradient-to-r from-emerald-800 to-teal-900 border border-emerald-600 rounded-3xl p-6 sm:p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
+                        <div>
+                            <span class="bg-amber-400 text-slate-950 text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full">Dashboard Aktif</span>
+                            <h2 class="text-2xl font-black text-white mt-2">Panel Kontrol Pengelola PORSENI</h2>
+                            <p class="text-emerald-100 text-xs mt-1">Anda memiliki akses penuh untuk mengedit seluruh konten website, Beranda, Hitung Mundur, dan Juknis.</p>
+                        </div>
+                        <button onclick="logoutAdmin()" class="bg-rose-600 hover:bg-rose-700 text-white font-bold px-5 py-2.5 rounded-xl text-xs flex items-center space-x-2">
+                            <i class="fa-solid fa-power-off"></i>
+                            <span>Keluar Admin</span>
+                        </button>
+                    </div>
+
+                    <!-- Pengaturan Umum & Hitung Mundur Website -->
+                    <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xl">
+                        <h3 class="text-lg font-black text-slate-900 mb-4"><i class="fa-solid fa-gear text-amber-600 mr-2"></i> Kelola Warna, Foto Banner Beranda & Hitung Mundur</h3>
+                        <form onsubmit="handleSaveGeneralSettings(event)" class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Judul Tahun / Event</label>
+                                    <input type="text" id="settingYear" value="2026" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Lokasi Utama Kegiatan</label>
+                                    <input type="text" id="settingLocation" value="Kecamatan Pinoh Utara, Kab. Melawi" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Target Waktu Hitung Mundur (Tanggal Event)</label>
+                                    <input type="datetime-local" id="settingCountdownDate" value="2026-07-14T08:00" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Status Hitung Mundur</label>
+                                    <select id="settingCountdownStatus" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                                        <option value="active">Aktif (Tampilkan & Hitung)</option>
+                                        <option value="disabled">Nonaktifkan / Sembunyikan</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Warna Gradasi Hero Banner</label>
+                                    <select id="settingHeroTheme" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                                        <option value="from-emerald-600 via-emerald-700 to-teal-800">Hijau Meriah (Emerald Sport)</option>
+                                        <option value="from-blue-600 via-indigo-700 to-sky-800">Biru Dinamis (Ocean Arena)</option>
+                                        <option value="from-amber-600 via-orange-600 to-red-700">Merah Semangat (Champion Orange)</option>
+                                        <option value="from-purple-600 via-indigo-600 to-blue-700">Ungu Kreatif (Arts & Sports)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Unggah Foto Latar Belakang Banner Beranda</label>
+                                    <input type="file" id="settingHeroFile" accept="image/*" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 text-xs text-slate-900 file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Badge Atas Beranda</label>
+                                    <input type="text" id="settingBadge" value="Semangat Juang Sportivitas Tanpa Batas" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Judul Sambutan Panitia</label>
+                                    <input type="text" id="settingSambutanTitle" value="Selamat Datang di PORSENI SD Pinoh Utara 2026" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Paragraf 1 Sambutan</label>
+                                    <textarea id="settingSambutanDesc1" rows="2" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">Kegiatan PORSENI tingkat Sekolah Dasar se-Kecamatan Pinoh Utara ini diselenggarakan sebagai wadah pembinaan bakat, minat, serta karakter sportif anak-anak didik kita dari SDN 1 hingga SDN 25 Pinoh Utara.</textarea>
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Paragraf 2 Sambutan</label>
+                                    <textarea id="settingSambutanDesc2" rows="2" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">Melalui ajang OSN, O2SN, dan FLS2N, kami berharap lahir generasi muda yang tidak hanya cerdas secara akademik, namun juga tangguh dalam bidang olahraga serta berjiwa seni tinggi. Selamat bertanding kepada seluruh kontingen!</textarea>
+                                </div>
+                            </div>
+                            <div class="flex justify-end">
+                                <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-black px-6 py-2.5 rounded-xl text-xs">Simpan Perubahan Beranda & Foto</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- PENGATURAN USER & PASSWORD ADMIN -->
+                    <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xl">
+                        <h3 class="text-lg font-black text-slate-900 mb-4"><i class="fa-solid fa-user-shield text-emerald-600 mr-2"></i> Pengaturan Akun & Kata Sandi Admin</h3>
+                        <p class="text-xs text-slate-500 mb-4">Ubah username dan password admin untuk menjaga keamanan akses pengelolaan website.</p>
+                        <form onsubmit="handleUpdateAdminCredentials(event)" class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Username Admin Baru</label>
+                                    <input type="text" id="newAdminUser" required placeholder="Masukkan username baru" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-700 mb-1">Password Admin Baru</label>
+                                    <input type="password" id="newAdminPass" required placeholder="Masukkan password baru" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                                </div>
+                            </div>
+                            <div class="flex justify-end">
+                                <button type="submit" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-black px-6 py-2.5 rounded-xl text-xs">Perbarui Kredensial Admin</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Kelola Peserta & Pendaftaran -->
+                    <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xl">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-black text-slate-900"><i class="fa-solid fa-users-gear text-emerald-600 mr-2"></i> Kelola Seluruh Peserta Kontingen</h3>
+                            <button onclick="downloadAllParticipantsWord()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center space-x-1.5"><i class="fa-solid fa-file-word"></i><span>Download Data Word</span></button>
+                        </div>
+                        <div id="adminRegistrationsList" class="overflow-x-auto">
+                            <!-- Diisi via JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-10 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="text-center md:text-left">
+                <div class="flex items-center justify-center md:justify-start space-x-2">
+                    <span class="text-sm font-black text-slate-900">PORSENI SD KECAMATAN PINOH UTARA</span>
+                    <span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full">Resmi</span>
+                </div>
+                <p class="text-xs text-slate-500 mt-1">Dinas Pendidikan dan Kebudayaan Kabupaten Melawi — SDN 1 s.d. SDN 25 Pinoh Utara.</p>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <button onclick="switchMenu('admin')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 px-4 py-2.5 rounded-xl text-xs font-bold transition-all border border-slate-200 flex items-center space-x-2">
+                    <i class="fa-solid fa-lock text-amber-500"></i>
+                    <span>Panel Admin Pengelola</span>
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL: Tambah / Edit Cabang Lomba -->
+    <div id="modalCabang" class="fixed inset-0 z-50 bg-slate-950/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white border border-slate-200 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl">
+            <div class="flex items-center justify-between mb-6">
+                <h3 id="modalCabangTitle" class="text-xl font-black text-slate-900">Tambah Cabang Lomba</h3>
+                <button onclick="closeModalCabang()" class="text-slate-400 hover:text-slate-700"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form id="formModalCabang" onsubmit="handleSaveCabangSubmit(event)" class="space-y-4">
+                <input type="hidden" id="modalCabangIndex" value="">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Nama Cabang Lomba</label>
+                    <input type="text" id="modalCabangNama" required placeholder="Contoh: Bulu Tangkis Putra" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Kategori Bidang</label>
+                    <select id="modalCabangBidang" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                        <option value="OSN">OSN (Olimpiade Sains Nasional)</option>
+                        <option value="O2SN">O2SN (Olimpiade Olahraga)</option>
+                        <option value="FLS2N">FLS2N (Festival Seni)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Kuota Peserta</label>
+                    <input type="text" id="modalCabangKuota" required placeholder="Contoh: 2 Siswa / Sekolah" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">Nama Koordinator Panitia</label>
+                        <input type="text" id="modalCabangKoordinator" required placeholder="Nama Guru / Panitia" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-700 mb-1">No. WhatsApp Koordinator</label>
+                        <input type="text" id="modalCabangWa" required placeholder="0812xxxxxxxx" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Ikon FontAwesome</label>
+                    <input type="text" id="modalCabangIcon" value="fa-medal" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                </div>
+                <div class="pt-4 flex justify-end space-x-3">
+                    <button type="button" onclick="closeModalCabang()" class="bg-slate-100 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold">Batal</button>
+                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-xl text-xs font-black">Simpan Cabang</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Tambah Juknis -->
+    <div id="modalJuknis" class="fixed inset-0 z-50 bg-slate-950/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white border border-slate-200 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl">
+            <div class="flex items-center justify-between mb-6">
+                <h3 id="modalJuknisTitle" class="text-xl font-black text-slate-900">Tambah / Atur Petunjuk Teknis (Juknis)</h3>
+                <button onclick="closeModalJuknis()" class="text-slate-400 hover:text-slate-700"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="handleSaveJuknisSubmit(event)" class="space-y-4">
+                <input type="hidden" id="modalJuknisIndex" value="">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Judul Juknis</label>
+                    <input type="text" id="modalJuknisJudul" required placeholder="Contoh: Ketentuan Umum Atletik SD" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Kategori</label>
+                    <select id="modalJuknisKategori" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                        <option value="OSN">OSN</option>
+                        <option value="O2SN">O2SN</option>
+                        <option value="FLS2N">FLS2N</option>
+                        <option value="Umum">Umum</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Tautan File Dokumen / Link Google Drive</label>
+                    <input type="text" id="modalJuknisLink" required placeholder="Contoh: https://drive.google.com/file/d/... atau https://..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Ketentuan / Aturan (Pisahkan dengan baris baru)</label>
+                    <textarea id="modalJuknisAturan" rows="4" required placeholder="Aturan 1&#10;Aturan 2" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900"></textarea>
+                </div>
+                <div class="pt-4 flex justify-end space-x-3">
+                    <button type="button" onclick="closeModalJuknis()" class="bg-slate-100 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold">Batal</button>
+                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-xl text-xs font-black">Simpan Juknis</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: Tambah Jadwal -->
+    <div id="modalSchedule" class="fixed inset-0 z-50 bg-slate-950/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white border border-slate-200 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl">
+            <div class="flex items-center justify-between mb-6">
+                <h3 id="modalScheduleTitle" class="text-xl font-black text-slate-900">Tambah Jadwal Kegiatan</h3>
+                <button onclick="closeModalSchedule()" class="text-slate-400 hover:text-slate-700"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="handleSaveScheduleSubmit(event)" class="space-y-4">
+                <input type="hidden" id="modalSchedDayIdx" value="">
+                <input type="hidden" id="modalSchedAgIdx" value="">
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Hari Pelaksanaan</label>
+                    <select id="modalSchedHari" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                        <option value="Hari 1">Hari 1 (Senin)</option>
+                        <option value="Hari 2">Hari 2 (Selasa)</option>
+                        <option value="Hari 3">Hari 3 (Rabu)</option>
+                        <option value="Hari 4">Hari 4 (Kamis)</option>
+                        <option value="Hari 5">Hari 5 (Jumat)</option>
+                        <option value="Hari 6">Hari 6 (Sabtu)</option>
+                        <option value="Hari 7">Hari 7 (Minggu)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Tanggal Lengkap (Hari, Tanggal Bulan Tahun)</label>
+                    <input type="text" id="modalSchedTanggal" required placeholder="Contoh: Senin, 13 Juli 2026" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Jam / Waktu</label>
+                    <input type="text" id="modalSchedWaktu" required placeholder="08.00 - 10.00 WIB" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Nama Kegiatan</label>
+                    <input type="text" id="modalSchedKegiatan" required placeholder="Upacara Pembukaan / Lomba..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Lokasi Pertandingan</label>
+                    <input type="text" id="modalSchedLokasi" required placeholder="Lapangan Utama Kec. Pinoh Utara" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900">
+                </div>
+                <div class="pt-4 flex justify-end space-x-3">
+                    <button type="button" onclick="closeModalSchedule()" class="bg-slate-100 text-slate-700 px-4 py-2 rounded-xl text-xs font-bold">Batal</button>
+                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2 rounded-xl text-xs font-black">Simpan Jadwal</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Custom Notification Modal -->
+    <div id="customModal" class="fixed inset-0 z-50 bg-slate-950/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white border border-slate-200 rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl">
+            <div id="customModalIcon" class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 text-xl font-bold">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 id="customModalTitle" class="text-lg font-black text-slate-900 mb-2">Informasi</h3>
+            <p id="customModalMessage" class="text-xs text-slate-600 mb-6">Pesan pemberitahuan.</p>
+            <button onclick="closeCustomModal()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs">Mengerti</button>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Data Utama Sekolah SD (SDN 1 s.d SDN 25 Pinoh Utara)
+        const listSekolahSD = [
+            "SD NEGERI 1 PINOH UTARA", "SD NEGERI 2 NANGA MAN", "SD NEGERI 3 MELAMUT", "SD NEGERI 4 NYATANG",
+            "SD NEGERI 5 SUNGAI PINANG", "SD NEGERI 6 PINOH UTARA", "SD NEGERI 07 MERPAK", "SD NEGERI 8 KENINJAL",
+            "SD NEGERI 9 TANJUNG ARAK", "SD NEGERI 10 MANDING", "SD NEGERI 11 TENGKAJAU", "SD NEGERI 12 ENGKURAI",
+            "SD NEGERI 13 SELAOH", "SD NEGERI 14 NATAI PANJANG", "SD NEGERI 15 SENIBUNG DARAT", "SD NEGERI 16 SUKA DAMAI",
+            "SD NEGERI 17 LEBAK TAPANG", "SD NEGERI 18 SUNGAI RAYA", "SD NEGERI 19 KECUKUH", "SD NEGERI 20 AKAMAYAU",
+            "SD NEGERI 21 MERAH ARAI", "SD NEGERI 22 JABA", "SD NEGERI 23 SENIBUNG LAUT", "SD NEGERI 24 LUMUT", "SD NEGERI 25 KAYAN SEMAPAU"
+        ];
+
+        // Data Cabang Lomba (OSN, O2SN, FLS2N)
+        let cabangList = [
+            { id: 1, nama: "OSN Matematika SD", bidang: "OSN", kuota: "2 Siswa / Sekolah", icon: "fa-calculator", koordinator: "Bpk. Budi Santoso, S.Pd.", wa: "081234567890", juara: { gold: "", silver: "", bronze: "" } },
+            { id: 2, nama: "OSN Ilmu Pengetahuan Alam (IPA)", bidang: "OSN", kuota: "2 Siswa / Sekolah", icon: "fa-atom", koordinator: "Ibu Siti Aminah, S.Pd.", wa: "081298765432", juara: { gold: "", silver: "", bronze: "" } },
+            { id: 3, nama: "Sepak Bola Mini SD", bidang: "O2SN", kuota: "1 Tim (8 Pemain) / Sekolah", icon: "fa-futbol", koordinator: "Bpk. Rahmat Hidayat, S.Or.", wa: "081355443322", juara: { gold: "", silver: "", bronze: "" } },
+            { id: 4, nama: "Bola Voli Mini Putra/Putri", bidang: "O2SN", kuota: "1 Tim / Sekolah", icon: "fa-volleyball", koordinator: "Ibu Dewi Lestari, S.Pd.", wa: "082177889900", juara: { gold: "", silver: "", bronze: "" } },
+            { id: 5, nama: "Bulutangkis (Tunggal)", bidang: "O2SN", kuota: "2 Putra, 2 Putri / Sekolah", icon: "fa-table-tennis-paddle-ball", koordinator: "Bpk. Joko Susilo, S.Pd.", wa: "085233445566", juara: { gold: "", silver: "", bronze: "" } },
+            { id: 6, nama: "Tenis Meja", bidang: "O2SN", kuota: "2 Siswa / Sekolah", icon: "fa-table-tennis", koordinator: "Bpk. Hendra Wijaya", wa: "081988776655", juara: { gold: "", silver: "", bronze: "" } },
+            { id: 7, nama: "Atletik (Lari & Lompat Jauh)", bidang: "O2SN", kuota: "4 Siswa / Sekolah", icon: "fa-person-running", koordinator: "Bpk. Marzuki, S.Pd.", wa: "081211223344", juara: { gold: "", silver: "", bronze: "" } },
+            { id: 8, nama: "Catur Cepat SD", bidang: "O2SN", kuota: "2 Siswa / Sekolah", icon: "fa-chess", koordinator: "Ibu Rina Marlina, S.Pd.", wa: "081399887766", juara: { gold: "", silver: "", bronze: "" } },
+            { id: 9, nama: "Tari Kreasi Daerah", bidang: "FLS2N", kuota: "1 Tim (3-5 Siswa)", icon: "fa-masks-theater", koordinator: "Ibu Nurul Hidayah, S.Pd.", wa: "082255667788", juara: { gold: "", silver: "", bronze: "" } },
+            { id: 10, nama: "Menyanyi Solo (Solo Vocal)", bidang: "FLS2N", kuota: "1 Siswa / Sekolah", icon: "fa-microphone", koordinator: "Ibu Eka Puspitasari, S.Pd.", wa: "081544332211", juara: { gold: "", silver: "", bronze: "" } },
+            { id: 11, nama: "Baca Puisi", bidang: "FLS2N", kuota: "1 Siswa / Sekolah", icon: "fa-book-open-reader", koordinator: "Bpk. Suwarto, S.Pd.", wa: "081266554433", juara: { gold: "", silver: "", bronze: "" } },
+            { id: 12, nama: "Seni Lukis / Gambar Bercerita", bidang: "FLS2N", kuota: "1 Siswa / Sekolah", icon: "fa-palette", koordinator: "Ibu Sri Wahyuni, S.Pd.", wa: "081377665544", juara: { gold: "", silver: "", bronze: "" } },
+            { id: 13, nama: "Kriya Seni (Kerajinan Tangan)", bidang: "FLS2N", kuota: "1 Siswa / Sekolah", icon: "fa-scissors", koordinator: "Bpk. Yudi Pratama", wa: "085322114455", juara: { gold: "", silver: "", bronze: "" } },
+            { id: 14, nama: "Mendongeng (Storytelling)", bidang: "FLS2N", kuota: "1 Siswa / Sekolah", icon: "fa-book-bookmark", koordinator: "Ibu Maimunah, S.Pd.", wa: "082133445566", juara: { gold: "", silver: "", bronze: "" } }
+        ];
+
+        // Data Pendaftaran Awal (Mock Kontingen)
+        let registrationsList = [
+            { id: 101, sekolah: "SD NEGERI 1 PINOH UTARA", cabang: "OSN Matematika SD", nama: "Ahmad Zaki", official: "Bpk. Budi" },
+            { id: 102, sekolah: "SD NEGERI 2 NANGA MAN", cabang: "Sepak Bola Mini SD", nama: "Tim Garuda SDN 2", official: "Bpk. Rahmat" },
+            { id: 103, sekolah: "SD NEGERI 3 MELAMUT", cabang: "Tari Kreasi Daerah", nama: "Regu Melati Melamut", official: "Ibu Nurul" },
+            { id: 104, sekolah: "SD NEGERI 5 SUNGAI PINANG", cabang: "OSN Ilmu Pengetahuan Alam (IPA)", nama: "Siti Rahma", official: "Ibu Siti" },
+            { id: 105, sekolah: "SD NEGERI 8 KENINJAL", cabang: "Bulutangkis (Tunggal)", nama: "Fajar Pratama", official: "Bpk. Joko" }
+        ];
+
+        // Data Juknis dengan link file / Google Drive
+        let juknisData = [
+            { judul: "Ketentuan Umum OSN SD", kategori: "OSN", kuota: "2 Siswa / Sekolah", icon: "fa-calculator", link: "https://drive.google.com", aturan: ["Peserta merupakan siswa aktif kelas IV atau V SD.", "Materi soal mencakup penalaran kurikulum merdeka.", "Waktu pengerjaan tes tertulis 120 menit."] },
+            { judul: "Ketentuan Pertandingan O2SN Olahraga", kategori: "O2SN", kuota: "Sesuai Cabang / Sekolah", icon: "fa-futbol", link: "https://drive.google.com", aturan: ["Peserta wajib membawa perlengkapan pribadi (sepatu, kaos tim).", "Menjunjung tinggi sportivitas dan fair play.", "Keputusan wasit mutlak tidak dapat diganggu gugat."] },
+            { judul: "Ketentuan Festival FLS2N Seni", kategori: "FLS2N", kuota: "Sesuai Cabang / Sekolah", icon: "fa-palette", link: "https://drive.google.com", aturan: ["Kostum dan properti disiapkan oleh masing-masing kontingen sekolah.", "Durasi penampilan seni disesuaikan dengan juknis teknis harian.", "Penilaian juri berdasarkan kreativitas, teknik, dan estetika."] }
+        ];
+
+        let targetCountdownTime = new Date(2026, 6, 14, 8, 0, 0).getTime();
+        let countdownActiveStatus = 'active';
+
+        let scheduleData = [
+            { hari: "Hari 1", tanggal: "Senin, 13 Juli 2026", agenda: [
+                { waktu: "08.00 - 10.00 WIB", kegiatan: "Technical Meeting & Pendaftaran Ulang Kontingen", lokasi: "Aula Utama Korwil Pinoh Utara", kategori: "Umum" },
+                { waktu: "13.00 - 16.00 WIB", kegiatan: "Gladi Bersih Upacara Pembukaan", lokasi: "Lapangan Utama Kec. Pinoh Utara", kategori: "Umum" }
+            ]},
+            { hari: "Hari 2", tanggal: "Selasa, 14 Juli 2026", agenda: [
+                { waktu: "08.00 - 10.00 WIB", kegiatan: "Upacara Pembukaan PORSENI SD 2026", lokasi: "Lapangan Utama Kec. Pinoh Utara", kategori: "Umum" },
+                { waktu: "10.30 - 14.00 WIB", kegiatan: "Babak Penyisihan OSN Matematika & IPA", lokasi: "SDN 1 Pinoh Utara", kategori: "OSN" }
+            ]},
+            { hari: "Hari 3", tanggal: "Rabu, 15 Juli 2026", agenda: [
+                { waktu: "08.00 - selesai", kegiatan: "Pertandingan Sepak Bola Mini & Bola Voli", lokasi: "Lapangan Desa Tekelak", kategori: "O2SN" },
+                { waktu: "09.00 - 12.00 WIB", kegiatan: "Lomba Menyanyi Solo & Baca Puisi", lokasi: "Gedung Serbaguna Pinoh Utara", kategori: "FLS2N" }
+            ]},
+            { hari: "Hari 4", tanggal: "Kamis, 16 Juli 2026", agenda: [
+                { waktu: "08.00 - 13.00 WIB", kegiatan: "Lomba Bulutangkis & Tenis Meja", lokasi: "GOR Kecamatan Pinoh Utara", kategori: "O2SN" },
+                { waktu: "13.30 - 16.00 WIB", kegiatan: "Lomba Tari Kreasi Daerah", lokasi: "Gedung Serbaguna Pinoh Utara", kategori: "FLS2N" }
+            ]},
+            { hari: "Hari 5", tanggal: "Jumat, 17 Juli 2026", agenda: [
+                { waktu: "08.00 - 11.30 WIB", kegiatan: "Cabang Atletik (Lari & Lompat Jauh)", lokasi: "Lapangan Utama Pinoh Utara", kategori: "O2SN" },
+                { waktu: "13.30 - 15.30 WIB", kegiatan: "Lomba Gambar Bercerita & Kriya Seni", lokasi: "SDN 1 Pinoh Utara", kategori: "FLS2N" }
+            ]},
+            { hari: "Hari 6", tanggal: "Sabtu, 18 Juli 2026", agenda: [
+                { waktu: "08.00 - 12.00 WIB", kegiatan: "Babak Final Seluruh Cabang Olahraga & Catur", lokasi: "GOR & Lapangan Utama", kategori: "O2SN" }
+            ]},
+            { hari: "Hari 7", tanggal: "Minggu, 19 Juli 2026", agenda: [
+                { waktu: "08.30 - 11.30 WIB", kegiatan: "Upacara Penutupan, Pengumuman Juara & Penyerahan Piala", lokasi: "Lapangan Utama Kec. Pinoh Utara", kategori: "Umum" }
+            ]}
+        ];
+
+        let isAdminLoggedIn = false;
+        // Kredensial Admin Dinamis
+        let currentAdminUsername = 'admin';
+        let currentAdminPassword = 'pinohutara2026';
+
+        let activeTab = 'beranda';
+        let currentActiveCabangId = null;
+        let currentCabangFilter = 'all';
+        let currentScheduleFilter = 'all';
+
+        // Window Onload Initialization
+        window.onload = function() {
+            renderCabangCards();
+            renderJuknisCards();
+            renderScheduleCards('all');
+            renderJuaraCabangCards();
+            renderKlasemenTable();
+            updateCabangOptions();
+            startCountdown();
+        };
+
+        // Switch Menu Tabs
+        function switchMenu(tabId) {
+            activeTab = tabId;
+            document.querySelectorAll('.tab-section').forEach(el => el.classList.remove('active'));
+            const targetSection = document.getElementById('section-' + tabId);
+            if (targetSection) targetSection.classList.add('active');
+
+            // Update Nav Active Styles
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.className = "nav-btn px-3.5 py-2 rounded-xl text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 hover:bg-slate-100";
+            });
+            const activeNavBtn = document.getElementById('menu-btn-' + tabId);
+            if (activeNavBtn) {
+                activeNavBtn.className = "nav-btn px-3.5 py-2 rounded-xl text-sm font-bold transition-all text-emerald-700 bg-emerald-50";
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            if (menu) menu.classList.toggle('hidden');
+        }
+
+        // Countdown Timer & Active Toggle
+        function startCountdown() {
+            setInterval(() => {
+                const widgetBox = document.getElementById('countdownWidgetBox');
+                if (!widgetBox) return;
+
+                if (countdownActiveStatus === 'disabled') {
+                    widgetBox.style.display = 'none';
+                    return;
+                } else {
+                    widgetBox.style.display = 'block';
+                }
+
+                const now = new Date().getTime();
+                const distance = targetCountdownTime - now;
+                if (distance > 0) {
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    const dEl = document.getElementById('cd-days');
+                    const hEl = document.getElementById('cd-hours');
+                    const mEl = document.getElementById('cd-mins');
+                    const sEl = document.getElementById('cd-secs');
+
+                    if (dEl) dEl.innerText = days;
+                    if (hEl) hEl.innerText = String(hours).padStart(2, '0');
+                    if (mEl) mEl.innerText = String(minutes).padStart(2, '0');
+                    if (sEl) sEl.innerText = String(seconds).padStart(2, '0');
+                } else {
+                    const dEl = document.getElementById('cd-days');
+                    if (dEl) dEl.innerText = "00";
+                }
+            }, 1000);
+        }
+
+        // Juknis Render & Link Drive
+        function renderJuknisCards() {
+            const container = document.getElementById('juknisContainer');
+            if (!container) return;
+
+            container.innerHTML = juknisData.map((j, idx) => `
+                <div class="bg-white border border-slate-200 p-6 rounded-3xl shadow-xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-black uppercase tracking-wider px-3 py-1 rounded-lg bg-emerald-100 text-emerald-800 border border-emerald-300">${j.kategori}</span>
+                            <div class="flex items-center space-x-2">
+                                ${isAdminLoggedIn ? `
+                                    <button onclick="openEditJuknisModal(${idx})" class="text-amber-600 hover:text-amber-700 text-xs px-2 py-1 bg-amber-50 rounded-lg"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button onclick="deleteJuknis(${idx})" class="text-rose-600 hover:text-rose-700 text-xs px-2 py-1 bg-rose-50 rounded-lg"><i class="fa-solid fa-trash"></i></button>
+                                ` : ''}
+                            </div>
+                        </div>
+                        <div class="w-12 h-12 bg-slate-100 text-emerald-600 rounded-2xl flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid ${j.icon || 'fa-book'}"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-slate-900 mb-2">${j.judul}</h3>
+                        <p class="text-xs text-slate-500 mb-4 font-bold">Kuota: <span class="text-slate-700">${j.kuota}</span></p>
+                        <ul class="space-y-2 mb-6 text-xs text-slate-600">
+                            ${j.aturan.map(at => `<li class="flex items-start space-x-2"><i class="fa-solid fa-check text-emerald-600 mt-0.5"></i><span>${at}</span></li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100">
+                        <a href="${j.link && j.link.startsWith('http') ? j.link : 'https://' + (j.link || 'drive.google.com')}" target="_blank" class="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold py-2.5 rounded-xl text-xs transition-all border border-emerald-200 flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-cloud-arrow-down"></i>
+                            <span>Buka / Unduh File Juknis (Drive)</span>
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // General Settings & Beranda Customizer
+        function handleSaveGeneralSettings(e) {
+            e.preventDefault();
+            const year = document.getElementById('settingYear').value;
+            const location = document.getElementById('settingLocation').value;
+            const countdownInput = document.getElementById('settingCountdownDate').value;
+            const cdStatus = document.getElementById('settingCountdownStatus').value;
+            const badge = document.getElementById('settingBadge').value;
+            const sambutanTitle = document.getElementById('settingSambutanTitle').value;
+            const sambutanDesc1 = document.getElementById('settingSambutanDesc1').value;
+            const sambutanDesc2 = document.getElementById('settingSambutanDesc2').value;
+            const heroTheme = document.getElementById('settingHeroTheme').value;
+            const heroBgUrl = document.getElementById('settingHeroBgImage').value;
+
+            if (countdownInput) {
+                targetCountdownTime = new Date(countdownInput).getTime();
+            }
+            countdownActiveStatus = cdStatus;
+
+            document.getElementById('heroYear').innerText = year;
+            document.getElementById('heroLocationText').innerText = location;
+            document.getElementById('navBrandTitle').innerText = `PORSENI SD ${year}`;
+            document.getElementById('pageMetaTitle').innerText = `PORSENI SD ${year} - Kecamatan Pinoh Utara`;
+            document.getElementById('heroBadgeText').innerText = badge;
+            document.getElementById('sambutanTitle').innerText = sambutanTitle;
+            document.getElementById('sambutanDesc1').innerText = sambutanDesc1;
+            document.getElementById('sambutanDesc2').innerText = sambutanDesc2;
+
+            // Update Hero Banner Theme & Background Image
+            const heroBox = document.getElementById('heroBannerBox');
+            if (heroBox) {
+                heroBox.className = `hero-glow bg-gradient-to-r ${heroTheme} border border-emerald-500/30 rounded-3xl p-8 sm:p-12 lg:p-16 shadow-2xl mb-16 text-white flex flex-col lg:flex-row items-center justify-between gap-10 relative overflow-hidden transition-all`;
+            }
+            const heroBgLayer = document.getElementById('heroBgImageLayer');
+            if (heroBgLayer && heroBgUrl) {
+                heroBgLayer.style.backgroundImage = `url('${heroBgUrl}')`;
+            }
+
+            const statusBadge = document.getElementById('countdownStatusBadge');
+            if (statusBadge) {
+                statusBadge.innerText = cdStatus === 'active' ? 'Aktif' : 'Nonaktif';
+                statusBadge.className = cdStatus === 'active' ? 'bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full' : 'bg-rose-100 text-rose-800 text-[10px] font-bold px-2 py-0.5 rounded-full';
+            }
+
+            showCustomModal("Berhasil", "Pengaturan Beranda, Tema Warna, dan Banner berhasil diperbarui!", "fa-check");
+        }
+
+        function handleSaveJuknisSubmit(e) {
+            e.preventDefault();
+            const idxVal = document.getElementById('modalJuknisIndex').value;
+            const judul = document.getElementById('modalJuknisJudul').value;
+            const kategori = document.getElementById('modalJuknisKategori').value;
+            const link = document.getElementById('modalJuknisLink').value;
+            const aturanText = document.getElementById('modalJuknisAturan').value;
+            const aturan = aturanText.split('\n').filter(Boolean);
+
+            if (idxVal === "") {
+                juknisData.push({ judul, kategori, kuota: "Sesuai Juknis", icon: "fa-book", link, aturan });
+                showCustomModal("Berhasil", "Dokumen Juknis & Tautan Drive berhasil ditambahkan.", "fa-check");
+            } else {
+                juknisData[Number(idxVal)] = { judul, kategori, kuota: "Sesuai Juknis", icon: "fa-book", link, aturan };
+                showCustomModal("Berhasil", "Dokumen Juknis berhasil diperbarui.", "fa-check");
+            }
+
+            closeModalJuknis();
+            renderJuknisCards();
+        }
+
+        // Render Cabang Cards
+        function filterCabangBidang(bidang) {
+            currentCabangFilter = bidang;
+            document.querySelectorAll('.cb-filter').forEach(btn => {
+                btn.className = "cb-filter px-4 py-2 rounded-xl text-xs font-extrabold text-slate-600 hover:text-slate-900 transition-all";
+            });
+            const activeBtn = document.getElementById('cb-filter-' + bidang);
+            if (activeBtn) activeBtn.className = "cb-filter px-4 py-2 rounded-xl text-xs font-extrabold bg-emerald-600 text-white transition-all";
+            renderCabangCards();
+        }
+
+        function renderCabangCards() {
+            const container = document.getElementById('cabangCardsContainer');
+            if (!container) return;
+
+            let filtered = cabangList;
+            if (currentCabangFilter !== 'all') {
+                filtered = cabangList.filter(c => c.bidang === currentCabangFilter);
+            }
+
+            container.innerHTML = filtered.map(c => {
+                const count = registrationsList.filter(r => r.cabang === c.nama).length;
+                return `
+                    <div onclick="selectCabangDetail(${c.id})" class="bg-white border border-slate-200 hover:border-emerald-500 p-6 rounded-3xl cursor-pointer transition-all shadow-md group flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-xs font-black uppercase tracking-wider px-3 py-1 rounded-lg bg-emerald-100 text-emerald-800 border border-emerald-300">${c.bidang}</span>
+                                <span class="text-xs text-slate-500 font-bold bg-slate-100 px-2.5 py-1 rounded-lg"><i class="fa-solid fa-users mr-1 text-emerald-600"></i> ${count} Sekolah</span>
+                            </div>
+                            <div class="w-12 h-12 bg-slate-100 text-amber-600 rounded-2xl flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                                <i class="fa-solid ${c.icon}"></i>
+                            </div>
+                            <h3 class="text-xl font-black text-slate-900 group-hover:text-emerald-700 transition-colors mb-2">${c.nama}</h3>
+                            <p class="text-xs text-slate-500 mb-2"><i class="fa-solid fa-user-shield mr-1 text-slate-400"></i> Koordinator: <span class="text-slate-700">${c.koordinator}</span></p>
+                            <p class="text-xs text-slate-500 mb-4"><i class="fa-solid fa-phone mr-1 text-slate-400"></i> WhatsApp: <span class="text-slate-700">${c.wa}</span></p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100 text-xs font-bold text-emerald-700">
+                            <span>Lihat Peserta & Juara</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Detail Peserta & Admin Panel Pemenang untuk Cabang Terpilih
+        function selectCabangDetail(id) {
+            const cabang = cabangList.find(c => c.id === id);
+            if (!cabang) return;
+            currentActiveCabangId = id;
+
+            const detailWrapper = document.getElementById('cabangDetailWrapper');
+            if (detailWrapper) detailWrapper.classList.remove('hidden');
+
+            const titleEl = document.getElementById('detailCabangTitle');
+            const bidangEl = document.getElementById('detailCabangBidang');
+            const iconEl = document.getElementById('detailCabangIcon');
+            const countEl = document.getElementById('detailCabangCount');
+            const koorEl = document.getElementById('detailCabangKoordinator');
+
+            if (titleEl) titleEl.innerText = cabang.nama;
+            if (bidangEl) bidangEl.innerText = cabang.bidang;
+            if (iconEl) iconEl.className = `fa-solid ${cabang.icon}`;
+            
+            const partList = registrationsList.filter(r => r.cabang === cabang.nama);
+            if (countEl) countEl.innerText = `${partList.length} Kontingen terdaftar`;
+            if (koorEl) koorEl.innerHTML = `<i class="fa-solid fa-user-shield mr-1"></i> Koordinator: ${cabang.koordinator} (WA: ${cabang.wa})`;
+
+            // Show admin edit button if logged in
+            const editBtnContainer = document.getElementById('adminBranchEditBtnContainer');
+            if (editBtnContainer) {
+                if (isAdminLoggedIn) editBtnContainer.classList.remove('hidden');
+                else editBtnContainer.classList.add('hidden');
+            }
+
+            // Show admin winner assignment panel if logged in
+            const winnerPanel = document.getElementById('adminWinnerAssignmentPanel');
+            if (winnerPanel) {
+                if (isAdminLoggedIn) {
+                    winnerPanel.classList.remove('hidden');
+                    populateWinnerSelects(cabang);
+                } else {
+                    winnerPanel.classList.add('hidden');
+                }
+            }
+
+            renderParticipantsList(cabang.nama);
+            const detailWrapperEl = document.getElementById('cabangDetailWrapper');
+            if (detailWrapperEl) detailWrapperEl.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function closeCabangDetail() {
+            const detailWrapper = document.getElementById('cabangDetailWrapper');
+            if (detailWrapper) detailWrapper.classList.add('hidden');
+            currentActiveCabangId = null;
+        }
+
+        function renderParticipantsList(cabangNama) {
+            const container = document.getElementById('detailParticipantsList');
+            if (!container) return;
+            const participants = registrationsList.filter(r => r.cabang === cabangNama);
+
+            if (participants.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 py-4 italic text-center">Belum ada sekolah yang mendaftar pada cabang lomba ini.</p>`;
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="flex justify-end mb-3">
+                    ${isAdminLoggedIn ? `<button onclick="downloadBranchParticipantsDoc('${cabangNama}')" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-3.5 py-1.5 rounded-xl text-xs flex items-center space-x-1.5"><i class="fa-solid fa-file-arrow-down"></i><span>Download Data Cabang (Word/PDF)</span></button>` : ''}
+                </div>
+                <table class="w-full text-left text-xs border-collapse">
+                    <thead>
+                        <tr class="text-slate-500 border-b border-slate-200 uppercase">
+                            <th class="py-3 px-4">No</th>
+                            <th class="py-3 px-4">Asal Sekolah</th>
+                            <th class="py-3 px-4">Nama Siswa / Regu</th>
+                            <th class="py-3 px-4">Guru Pendamping</th>
+                            ${isAdminLoggedIn ? '<th class="py-3 px-4 text-center">Aksi</th>' : ''}
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 text-slate-700">
+                        ${participants.map((p, idx) => `
+                            <tr>
+                                <td class="py-3 px-4">${idx + 1}</td>
+                                <td class="py-3 px-4 font-bold text-slate-900">${p.sekolah}</td>
+                                <td class="py-3 px-4">${p.nama}</td>
+                                <td class="py-3 px-4">${p.official}</td>
+                                ${isAdminLoggedIn ? `<td class="py-3 px-4 text-center"><button onclick="deleteParticipant(${p.id})" class="text-rose-600 hover:text-rose-700 px-2 py-1 bg-rose-50 rounded-lg"><i class="fa-solid fa-trash"></i></button></td>` : ''}
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        function populateWinnerSelects(cabang) {
+            const goldSel = document.getElementById('winGoldSelect');
+            const silverSel = document.getElementById('winSilverSelect');
+            const bronzeSel = document.getElementById('winBronzeSelect');
+            if (!goldSel || !silverSel || !bronzeSel) return;
+
+            const partList = registrationsList.filter(r => r.cabang === cabang.nama);
+            const optionsHtml = '<option value="">-- Pilih Kontingen Peserta --</option>' + partList.map(p => `<option value="${p.sekolah}">${p.sekolah} (${p.nama})</option>`).join('');
+
+            goldSel.innerHTML = optionsHtml;
+            silverSel.innerHTML = optionsHtml;
+            bronzeSel.innerHTML = optionsHtml;
+
+            goldSel.value = cabang.juara.gold || "";
+            silverSel.value = cabang.juara.silver || "";
+            bronzeSel.value = cabang.juara.bronze || "";
+        }
+
+        function handleSaveBranchWinner(e) {
+            e.preventDefault();
+            if (!currentActiveCabangId) return;
+            const cabang = cabangList.find(c => c.id === currentActiveCabangId);
+            if (!cabang) return;
+
+            cabang.juara.gold = document.getElementById('winGoldSelect').value;
+            cabang.juara.silver = document.getElementById('winSilverSelect').value;
+            cabang.juara.bronze = document.getElementById('winBronzeSelect').value;
+
+            showCustomModal("Berhasil", "Juara cabang lomba berhasil disimpan dan disinkronkan ke Klasemen Medali!", "fa-trophy");
+            renderKlasemenTable();
+            renderJuaraCabangCards();
+        }
+
+        // Registration Submission
+        function updateCabangOptions() {
+            const select = document.getElementById('regCabang');
+            if (!select) return;
+            select.innerHTML = '<option value="">-- Pilih Cabang Lomba --</option>' + cabangList.map(c => `<option value="${c.nama}">${c.nama} (${c.bidang})</option>`).join('');
+        }
+
+        function handleRegistrationSubmit(e) {
+            e.preventDefault();
+            const sekolah = document.getElementById('regSekolah').value;
+            const cabang = document.getElementById('regCabang').value;
+            const nama = document.getElementById('regNama').value;
+            const official = document.getElementById('regOfficial').value;
+
+            const newReg = { id: Date.now(), sekolah, cabang, nama, official };
+            registrationsList.push(newReg);
+
+            showCustomModal("Pendaftaran Berhasil", `Kontingen dari ${sekolah} untuk cabang ${cabang} berhasil didaftarkan!`, "fa-check");
+            document.getElementById('formPendaftaran').reset();
+            renderCabangCards();
+            renderAdminRegistrations();
+        }
+
+        function deleteParticipant(id) {
+            registrationsList = registrationsList.filter(r => r.id !== id);
+            showCustomModal("Berhasil", "Data peserta berhasil dihapus.", "fa-trash");
+            renderCabangCards();
+            renderAdminRegistrations();
+            if (currentActiveCabangId) {
+                const cabang = cabangList.find(c => c.id === currentActiveCabangId);
+                if (cabang) renderParticipantsList(cabang.nama);
+            }
+        }
+
+        // Schedule Filter & Render (Senin s.d. Minggu)
+        function filterSchedule(hari) {
+            currentScheduleFilter = hari;
+            document.querySelectorAll('.sched-btn').forEach(btn => {
+                btn.className = "sched-btn shrink-0 px-3.5 py-2.5 rounded-xl font-extrabold text-xs bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 transition-all";
+            });
+            const activeBtn = document.getElementById('sched-btn-' + hari);
+            if (activeBtn) activeBtn.className = "sched-btn shrink-0 px-3.5 py-2.5 rounded-xl font-extrabold text-xs bg-emerald-600 text-white shadow-sm transition-all";
+            renderScheduleCards(hari);
+        }
+
+        function renderScheduleCards(filter) {
+            const container = document.getElementById('scheduleContainer');
+            if (!container) return;
+
+            let filtered = scheduleData;
+            if (filter !== 'all') {
+                filtered = scheduleData.filter(s => s.hari === filter);
+            }
+
+            container.innerHTML = filtered.map((s, sIdx) => `
+                <div class="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-xl">
+                    <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-200">
+                        <div>
+                            <span class="text-xs font-black uppercase tracking-wider text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full border border-emerald-300">${s.hari}</span>
+                            <h3 class="text-xl font-black text-slate-900 mt-2">${s.tanggal}</h3>
+                        </div>
+                        ${isAdminLoggedIn ? `<button onclick="deleteScheduleDay(${sIdx})" class="text-rose-600 hover:text-rose-700 text-xs px-3 py-1.5 bg-rose-50 rounded-xl font-bold border border-rose-200"><i class="fa-solid fa-trash mr-1"></i> Hapus Hari</button>` : ''}
+                    </div>
+                    <div class="space-y-4">
+                        ${s.agenda.map((ag, agIdx) => `
+                            <div class="bg-slate-50 border border-slate-200 p-4 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                <div class="flex items-start space-x-4">
+                                    <div class="w-10 h-10 bg-emerald-100 text-emerald-700 rounded-xl flex items-center justify-center font-bold text-sm shrink-0">
+                                        <i class="fa-solid fa-clock"></i>
+                                    </div>
+                                    <div>
+                                        <span class="text-xs font-bold text-amber-700 bg-amber-100 px-2 py-0.5 rounded">${ag.waktu}</span>
+                                        <h4 class="text-sm sm:text-base font-black text-slate-900 mt-1">${ag.kegiatan}</h4>
+                                        <p class="text-xs text-slate-500 mt-0.5"><i class="fa-solid fa-location-dot mr-1 text-slate-400"></i> ${ag.lokasi}</p>
+                                    </div>
+                                </div>
+                                ${isAdminLoggedIn ? `
+                                    <div class="flex items-center space-x-2 shrink-0">
+                                        <button onclick="openEditScheduleItem(${sIdx}, ${agIdx})" class="text-amber-600 hover:text-amber-700 text-xs px-3 py-1.5 bg-amber-50 rounded-xl font-bold border border-amber-200"><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button onclick="deleteScheduleItem(${sIdx}, ${agIdx})" class="text-rose-600 hover:text-rose-700 text-xs px-3 py-1.5 bg-rose-50 rounded-xl font-bold border border-rose-200"><i class="fa-solid fa-trash"></i></button>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Juara Cabang & Klasemen Medali
+        function renderJuaraCabangCards() {
+            const container = document.getElementById('juaraCabangContainer');
+            if (!container) return;
+
+            container.innerHTML = cabangList.map(c => `
+                <div class="bg-white border border-slate-200 p-6 rounded-3xl shadow-xl flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-black uppercase tracking-wider px-3 py-1 rounded-lg bg-amber-100 text-amber-800 border border-amber-300">${c.bidang}</span>
+                            <span class="text-xs text-slate-500 font-bold"><i class="fa-solid fa-medal text-amber-500 mr-1"></i> Pemenang Resmi</span>
+                        </div>
+                        <div class="w-12 h-12 bg-slate-100 text-amber-600 rounded-2xl flex items-center justify-center text-xl mb-4">
+                            <i class="fa-solid ${c.icon}"></i>
+                        </div>
+                        <h3 class="text-xl font-black text-slate-900 mb-4">${c.nama}</h3>
+                        
+                        <div class="space-y-3 mb-6">
+                            <div class="bg-amber-50 border border-amber-300 p-3 rounded-2xl flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fa-solid fa-medal text-amber-500 text-lg"></i>
+                                    <div>
+                                        <span class="text-[10px] font-black text-amber-800 uppercase block">Juara 1 (Emas)</span>
+                                        <span class="text-xs font-bold text-slate-900">${c.juara.gold || 'Belum ditentukan'}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-slate-50 border border-slate-300 p-3 rounded-2xl flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fa-solid fa-medal text-slate-400 text-lg"></i>
+                                    <div>
+                                        <span class="text-[10px] font-black text-slate-600 uppercase block">Juara 2 (Perak)</span>
+                                        <span class="text-xs font-bold text-slate-900">${c.juara.silver || 'Belum ditentukan'}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-orange-50 border border-amber-800/30 p-3 rounded-2xl flex items-center justify-between">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fa-solid fa-medal text-amber-700 text-lg"></i>
+                                    <div>
+                                        <span class="text-[10px] font-black text-amber-900 uppercase block">Juara 3 (Perunggu)</span>
+                                        <span class="text-xs font-bold text-slate-900">${c.juara.bronze || 'Belum ditentukan'}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="switchMenu('cabang'); selectCabangDetail(${c.id});" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition-all border border-slate-200">
+                        Kelola / Lihat Detail Cabang
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function renderKlasemenTable() {
+            const tbody = document.getElementById('klasemenTableBody');
+            if (!tbody) return;
+
+            // Hitung medali per sekolah
+            const stats = {};
+            listSekolahSD.forEach(s => {
+                stats[s] = { emas: 0, perak: 0, perunggu: 0, total: 0 };
+            });
+
+            cabangList.forEach(c => {
+                if (c.juara.gold && stats[c.juara.gold]) stats[c.juara.gold].emas += 1;
+                if (c.juara.silver && stats[c.juara.silver]) stats[c.juara.silver].perak += 1;
+                if (c.juara.bronze && stats[c.juara.bronze]) stats[c.juara.bronze].perunggu += 1;
+            });
+
+            const sortedSekolah = listSekolahSD.map(s => {
+                const sObj = stats[s];
+                sObj.total = (sObj.emas * 3) + (sObj.perak * 2) + (sObj.perunggu * 1);
+                return { sekolah: s, ...sObj };
+            }).sort((a, b) => b.emas - a.emas || b.perak - a.perak || b.perunggu - a.perunggu || b.total - a.total);
+
+            tbody.innerHTML = sortedSekolah.map((item, idx) => `
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="py-4 px-6 text-center font-black ${idx === 0 ? 'text-amber-500 text-lg' : idx === 1 ? 'text-slate-400 text-base' : idx === 2 ? 'text-amber-700 text-base' : 'text-slate-600'}">
+                        ${idx + 1}
+                    </td>
+                    <td class="py-4 px-6 font-bold text-slate-900">${item.sekolah}</td>
+                    <td class="py-4 px-6 text-center font-black text-amber-600 bg-amber-50/50">${item.emas}</td>
+                    <td class="py-4 px-6 text-center font-black text-slate-600 bg-slate-50/50">${item.perak}</td>
+                    <td class="py-4 px-6 text-center font-black text-amber-800 bg-orange-50/50">${item.perunggu}</td>
+                    <td class="py-4 px-6 text-center font-black text-emerald-600">${item.total}</td>
+                </tr>
+            `).join('');
+        }
+
+        function handleSaveGeneralSettings(e) {
+            e.preventDefault();
+            const year = document.getElementById('settingYear').value;
+            const location = document.getElementById('settingLocation').value;
+            const countdownInput = document.getElementById('settingCountdownDate').value;
+            const cdStatus = document.getElementById('settingCountdownStatus').value;
+            const badge = document.getElementById('settingBadge').value;
+            const sambutanTitle = document.getElementById('settingSambutanTitle').value;
+            const sambutanDesc1 = document.getElementById('settingSambutanDesc1').value;
+            const sambutanDesc2 = document.getElementById('settingSambutanDesc2').value;
+            const heroTheme = document.getElementById('settingHeroTheme').value;
+            const fileInput = document.getElementById('settingHeroFile');
+
+            if (countdownInput) {
+                targetCountdownTime = new Date(countdownInput).getTime();
+            }
+            countdownActiveStatus = cdStatus;
+
+            document.getElementById('heroYear').innerText = year;
+            document.getElementById('heroLocationText').innerText = location;
+            document.getElementById('navBrandTitle').innerText = `PORSENI SD ${year}`;
+            document.getElementById('pageMetaTitle').innerText = `PORSENI SD ${year} - Kecamatan Pinoh Utara`;
+            document.getElementById('heroBadgeText').innerText = badge;
+            document.getElementById('sambutanTitle').innerText = sambutanTitle;
+            document.getElementById('sambutanDesc1').innerText = sambutanDesc1;
+            document.getElementById('sambutanDesc2').innerText = sambutanDesc2;
+
+            const heroBox = document.getElementById('heroBannerBox');
+            if (heroBox) {
+                heroBox.className = `hero-glow bg-gradient-to-r ${heroTheme} border border-emerald-500/30 rounded-3xl p-8 sm:p-12 lg:p-16 shadow-2xl mb-16 text-white flex flex-col lg:flex-row items-center justify-between gap-10 relative overflow-hidden transition-all`;
+            }
+
+            if (fileInput && fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    const heroBgLayer = document.getElementById('heroBgImageLayer');
+                    if (heroBgLayer) {
+                        heroBgLayer.style.backgroundImage = `url('${evt.target.result}')`;
+                    }
+                    showCustomModal("Berhasil", "Pengaturan Beranda & Foto Banner berhasil diperbarui!", "fa-check");
+                };
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                showCustomModal("Berhasil", "Pengaturan Beranda & Tema Warna berhasil diperbarui!", "fa-check");
+            }
+
+            const statusBadge = document.getElementById('countdownStatusBadge');
+            if (statusBadge) {
+                statusBadge.innerText = cdStatus === 'active' ? 'Aktif' : 'Nonaktif';
+                statusBadge.className = cdStatus === 'active' ? 'bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full' : 'bg-rose-100 text-rose-800 text-[10px] font-bold px-2 py-0.5 rounded-full';
+            }
+        }
+
+        // Export/Download Data Peserta as Word/Doc format
+        function downloadBranchParticipantsDoc(cabangNama) {
+            if (!isAdminLoggedIn) return;
+            const partList = registrationsList.filter(r => r.cabang === cabangNama);
+            let htmlContent = `
+                <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+                <head><meta charset='utf-8'><title>Data Peserta ${cabangNama}</title></head>
+                <body style='font-family: Arial, sans-serif;'>
+                <h2>DAFTAR PESERTA KONTINGEN PORSENI SD 2026</h2>
+                <h3>Cabang Lomba: ${cabangNama}</h3>
+                <p>Kecamatan Pinoh Utara, Kabupaten Melawi</p>
+                <table border='1' cellspacing='0' cellpadding='5' style='border-collapse: collapse; width: 100%; font-size: 12px;'>
+                    <tr style='background-color: #f2f2f2;'>
+                        <th>No</th><th>Asal Sekolah</th><th>Nama Siswa / Regu</th><th>Guru Pendamping</th>
+                    </tr>
+                    ${partList.map((p, i) => `<tr><td>${i+1}</td><td><b>${p.sekolah}</b></td><td>${p.nama}</td><td>${p.official}</td></tr>`).join('')}
+                </table>
+                </body></html>
+            `;
+            const blob = new Blob(['\ufeff' + htmlContent], { type: 'application/msword' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Data_Peserta_${cabangNama.replace(/[^a-zA-Z0-9]/g, '_')}.doc`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        function downloadAllParticipantsWord() {
+            if (!isAdminLoggedIn) return;
+            let htmlContent = `
+                <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+                <head><meta charset='utf-8'><title>Rekap Seluruh Peserta Porseni</title></head>
+                <body style='font-family: Arial, sans-serif;'>
+                <h2>REKAPITULASI SELURUH PESERTA KONTINGEN PORSENI SD 2026</h2>
+                <p>Kecamatan Pinoh Utara, Kabupaten Melawi</p>
+                <table border='1' cellspacing='0' cellpadding='5' style='border-collapse: collapse; width: 100%; font-size: 12px;'>
+                    <tr style='background-color: #f2f2f2;'>
+                        <th>No</th><th>Asal Sekolah</th><th>Cabang Lomba</th><th>Nama Siswa / Regu</th><th>Pendamping</th>
+                    </tr>
+                    ${registrationsList.map((p, i) => `<tr><td>${i+1}</td><td><b>${p.sekolah}</b></td><td>${p.cabang}</td><td>${p.nama}</td><td>${p.official}</td></tr>`).join('')}
+                </table>
+                </body></html>
+            `;
+            const blob = new Blob(['\ufeff' + htmlContent], { type: 'application/msword' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Rekap_Seluruh_Peserta_Porseni_Pinoh_Utara.doc`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // Admin Auth & Controls
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('adminUser').value;
+            const p = document.getElementById('adminPass').value;
+
+            if (u === currentAdminUsername && p === currentAdminPassword) {
+                isAdminLoggedIn = true;
+                document.getElementById('adminLoginBox').classList.add('hidden');
+                document.getElementById('adminDashboardBox').classList.remove('hidden');
+                document.getElementById('adminBadge').classList.remove('hidden');
+                document.getElementById('adminBadge').classList.add('flex');
+                document.getElementById('adminAddBranchBtnContainer').classList.remove('hidden');
+                document.getElementById('adminAddJuknisBtnContainer').classList.remove('hidden');
+                document.getElementById('adminAddScheduleBtnContainer').classList.remove('hidden');
+                
+                // Set nilai input form ganti password dengan yang aktif
+                const newUField = document.getElementById('newAdminUser');
+                const newPField = document.getElementById('newAdminPass');
+                if (newUField) newUField.value = currentAdminUsername;
+                if (newPField) newPField.value = currentAdminPassword;
+
+                renderAdminRegistrations();
+                renderCabangCards();
+                renderJuknisCards();
+                renderScheduleCards(currentScheduleFilter);
+                showCustomModal("Login Berhasil", "Selamat datang di Panel Admin Pengelola PORSENI SD Pinoh Utara.", "fa-shield-halved");
+            } else {
+                showCustomModal("Login Gagal", "Username atau Password panitia salah.", "fa-triangle-exclamation");
+            }
+        }
+
+        function handleUpdateAdminCredentials(e) {
+            e.preventDefault();
+            const newU = document.getElementById('newAdminUser').value.trim();
+            const newP = document.getElementById('newAdminPass').value.trim();
+
+            if (!newU || !newP) {
+                showCustomModal("Perhatian", "Username dan Password tidak boleh kosong.", "fa-triangle-exclamation");
+                return;
+            }
+
+            currentAdminUsername = newU;
+            currentAdminPassword = newP;
+            showCustomModal("Berhasil", "Username dan Password admin berhasil diperbarui! Gunakan kredensial baru ini untuk login selanjutnya.", "fa-check");
+        }
+
+        function logoutAdmin() {
+            isAdminLoggedIn = false;
+            document.getElementById('adminLoginBox').classList.remove('hidden');
+            document.getElementById('adminDashboardBox').classList.add('hidden');
+            document.getElementById('adminBadge').classList.add('hidden');
+            document.getElementById('adminBadge').classList.remove('flex');
+            document.getElementById('adminAddBranchBtnContainer').classList.add('hidden');
+            document.getElementById('adminAddJuknisBtnContainer').classList.add('hidden');
+            document.getElementById('adminAddScheduleBtnContainer').classList.add('hidden');
+            
+            renderCabangCards();
+            renderJuknisCards();
+            renderScheduleCards(currentScheduleFilter);
+            showCustomModal("Keluar", "Anda telah keluar dari Panel Admin.", "fa-power-off");
+            switchMenu('beranda');
+        }
+
+        function renderAdminRegistrations() {
+            const container = document.getElementById('adminRegistrationsList');
+            if (!container) return;
+
+            if (registrationsList.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 py-4 italic text-center">Belum ada pendaftaran kontingen.</p>`;
+                return;
+            }
+
+            container.innerHTML = `
+                <table class="w-full text-left text-xs border-collapse">
+                    <thead>
+                        <tr class="text-slate-500 border-b border-slate-200 uppercase">
+                            <th class="py-3 px-4">No</th>
+                            <th class="py-3 px-4">Sekolah</th>
+                            <th class="py-3 px-4">Cabang</th>
+                            <th class="py-3 px-4">Nama Siswa / Regu</th>
+                            <th class="py-3 px-4">Official</th>
+                            <th class="py-3 px-4 text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 text-slate-700">
+                        ${registrationsList.map((r, idx) => `
+                            <tr>
+                                <td class="py-3 px-4">${idx + 1}</td>
+                                <td class="py-3 px-4 font-bold text-slate-900">${r.sekolah}</td>
+                                <td class="py-3 px-4">${r.cabang}</td>
+                                <td class="py-3 px-4">${r.nama}</td>
+                                <td class="py-3 px-4">${r.official}</td>
+                                <td class="py-3 px-4 text-center"><button onclick="deleteParticipant(${r.id})" class="text-rose-600 hover:text-rose-700 px-2 py-1 bg-rose-50 rounded-lg"><i class="fa-solid fa-trash"></i></button></td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        // Modals management (Cabang, Juknis, Schedule, Custom Alert)
+        function openAddBranchModal() {
+            document.getElementById('modalCabangTitle').innerText = "Tambah Cabang Lomba";
+            document.getElementById('modalCabangIndex').value = "";
+            document.getElementById('formModalCabang').reset();
+            document.getElementById('modalCabang').classList.remove('hidden');
+        }
+
+        function openEditActiveBranchModal() {
+            if (!currentActiveCabangId) return;
+            const cabang = cabangList.find(c => c.id === currentActiveCabangId);
+            if (!cabang) return;
+
+            document.getElementById('modalCabangTitle').innerText = "Edit Cabang Lomba";
+            document.getElementById('modalCabangIndex').value = cabang.id;
+            document.getElementById('modalCabangNama').value = cabang.nama;
+            document.getElementById('modalCabangBidang').value = cabang.bidang;
+            document.getElementById('modalCabangKuota').value = cabang.kuota;
+            document.getElementById('modalCabangKoordinator').value = cabang.koordinator;
+            document.getElementById('modalCabangWa').value = cabang.wa;
+            document.getElementById('modalCabangIcon').value = cabang.icon;
+            document.getElementById('modalCabang').classList.remove('hidden');
+        }
+
+        function closeModalCabang() {
+            document.getElementById('modalCabang').classList.add('hidden');
+        }
+
+        function handleSaveCabangSubmit(e) {
+            e.preventDefault();
+            const idxVal = document.getElementById('modalCabangIndex').value;
+            const nama = document.getElementById('modalCabangNama').value;
+            const bidang = document.getElementById('modalCabangBidang').value;
+            const kuota = document.getElementById('modalCabangKuota').value;
+            const koordinator = document.getElementById('modalCabangKoordinator').value;
+            const wa = document.getElementById('modalCabangWa').value;
+            const icon = document.getElementById('modalCabangIcon').value;
+
+            if (idxVal === "") {
+                const newCabang = { id: Date.now(), nama, bidang, kuota, koordinator, wa, icon, juara: { gold: "", silver: "", bronze: "" } };
+                cabangList.push(newCabang);
+                showCustomModal("Berhasil", "Cabang lomba baru berhasil ditambahkan.", "fa-check");
+            } else {
+                const cabang = cabangList.find(c => c.id == idxVal);
+                if (cabang) {
+                    cabang.nama = nama;
+                    cabang.bidang = bidang;
+                    cabang.kuota = kuota;
+                    cabang.koordinator = koordinator;
+                    cabang.wa = wa;
+                    cabang.icon = icon;
+                    showCustomModal("Berhasil", "Cabang lomba berhasil diperbarui.", "fa-check");
+                }
+            }
+
+            closeModalCabang();
+            renderCabangCards();
+            updateCabangOptions();
+            renderJuaraCabangCards();
+            if (currentActiveCabangId && idxVal !== "") selectCabangDetail(Number(idxVal));
+        }
+
+        function deleteActiveBranch() {
+            if (!currentActiveCabangId) return;
+            cabangList = cabangList.filter(c => c.id !== currentActiveCabangId);
+            closeCabangDetail();
+            renderCabangCards();
+            updateCabangOptions();
+            renderJuaraCabangCards();
+            renderKlasemenTable();
+            showCustomModal("Berhasil", "Cabang lomba berhasil dihapus.", "fa-trash");
+        }
+
+        function openAddJuknisModal() {
+            document.getElementById('modalJuknisTitle').innerText = "Tambah Petunjuk Teknis (Juknis)";
+            document.getElementById('modalJuknisIndex').value = "";
+            document.getElementById('modalJuknisJudul').value = "";
+            document.getElementById('modalJuknisLink').value = "";
+            document.getElementById('modalJuknisAturan').value = "";
+            document.getElementById('modalJuknis').classList.remove('hidden');
+        }
+
+        function openEditJuknisModal(idx) {
+            const j = juknisData[idx];
+            if (!j) return;
+            document.getElementById('modalJuknisTitle').innerText = "Edit Petunjuk Teknis (Juknis)";
+            document.getElementById('modalJuknisIndex').value = idx;
+            document.getElementById('modalJuknisJudul').value = j.judul;
+            document.getElementById('modalJuknisKategori').value = j.kategori;
+            document.getElementById('modalJuknisLink').value = j.link;
+            document.getElementById('modalJuknisAturan').value = j.aturan.join('\n');
+            document.getElementById('modalJuknis').classList.remove('hidden');
+        }
+
+        function closeModalJuknis() {
+            document.getElementById('modalJuknis').classList.add('hidden');
+        }
+
+        function deleteJuknis(idx) {
+            juknisData.splice(idx, 1);
+            renderJuknisCards();
+            showCustomModal("Berhasil", "Juknis berhasil dihapus.", "fa-trash");
+        }
+
+        function openAddScheduleModal() {
+            document.getElementById('modalScheduleTitle').innerText = "Tambah Jadwal Kegiatan";
+            document.getElementById('modalSchedDayIdx').value = "";
+            document.getElementById('modalSchedAgIdx').value = "";
+            document.getElementById('modalSchedTanggal').value = "Senin, 13 Juli 2026";
+            document.getElementById('modalSchedWaktu').value = "";
+            document.getElementById('modalSchedKegiatan').value = "";
+            document.getElementById('modalSchedLokasi').value = "";
+            document.getElementById('modalSchedule').classList.remove('hidden');
+        }
+
+        function openEditScheduleItem(dayIdx, agIdx) {
+            const day = scheduleData[dayIdx];
+            const ag = day.agenda[agIdx];
+            if (!ag) return;
+
+            document.getElementById('modalScheduleTitle').innerText = "Edit Jadwal Kegiatan";
+            document.getElementById('modalSchedDayIdx').value = dayIdx;
+            document.getElementById('modalSchedAgIdx').value = agIdx;
+            document.getElementById('modalSchedHari').value = day.hari;
+            document.getElementById('modalSchedTanggal').value = day.tanggal;
+            document.getElementById('modalSchedWaktu').value = ag.waktu;
+            document.getElementById('modalSchedKegiatan').value = ag.kegiatan;
+            document.getElementById('modalSchedLokasi').value = ag.lokasi;
+            document.getElementById('modalSchedule').classList.remove('hidden');
+        }
+
+        function closeModalSchedule() {
+            document.getElementById('modalSchedule').classList.add('hidden');
+        }
+
+        function handleSaveScheduleSubmit(e) {
+            e.preventDefault();
+            const dayIdxVal = document.getElementById('modalSchedDayIdx').value;
+            const agIdxVal = document.getElementById('modalSchedAgIdx').value;
+            const hari = document.getElementById('modalSchedHari').value;
+            const tanggal = document.getElementById('modalSchedTanggal').value;
+            const waktu = document.getElementById('modalSchedWaktu').value;
+            const kegiatan = document.getElementById('modalSchedKegiatan').value;
+            const lokasi = document.getElementById('modalSchedLokasi').value;
+
+            if (dayIdxVal === "" || agIdxVal === "") {
+                let dayObj = scheduleData.find(s => s.hari === hari);
+                if (dayObj) {
+                    dayObj.tanggal = tanggal;
+                    dayObj.agenda.push({ waktu, kegiatan, lokasi, kategori: "Umum" });
+                } else {
+                    scheduleData.push({ hari, tanggal, agenda: [{ waktu, kegiatan, lokasi, kategori: "Umum" }] });
+                }
+                showCustomModal("Berhasil", "Jadwal kegiatan baru berhasil ditambahkan.", "fa-check");
+            } else {
+                const dayObj = scheduleData[Number(dayIdxVal)];
+                dayObj.hari = hari;
+                dayObj.tanggal = tanggal;
+                dayObj.agenda[Number(agIdxVal)] = { waktu, kegiatan, lokasi, kategori: "Umum" };
+                showCustomModal("Berhasil", "Jadwal kegiatan berhasil diperbarui.", "fa-check");
+            }
+
+            closeModalSchedule();
+            renderScheduleCards(currentScheduleFilter);
+        }
+
+        function deleteScheduleItem(dayIdx, agIdx) {
+            scheduleData[dayIdx].agenda.splice(agIdx, 1);
+            renderScheduleCards(currentScheduleFilter);
+            showCustomModal("Berhasil", "Agenda kegiatan berhasil dihapus.", "fa-trash");
+        }
+
+        function deleteScheduleDay(dayIdx) {
+            scheduleData.splice(dayIdx, 1);
+            renderScheduleCards(currentScheduleFilter);
+            showCustomModal("Berhasil", "Jadwal hari tersebut berhasil dihapus.", "fa-trash");
+        }
+
+        function showCustomModal(title, message, iconClass) {
+            document.getElementById('customModalTitle').innerText = title;
+            document.getElementById('customModalMessage').innerText = message;
+            document.getElementById('customModalIcon').innerHTML = `<i class="fa-solid ${iconClass}"></i>`;
+            document.getElementById('customModal').classList.add('hidden'); // Reset
+            document.getElementById('customModal').classList.remove('hidden');
+        }
+
+        function closeCustomModal() {
+            document.getElementById('customModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
